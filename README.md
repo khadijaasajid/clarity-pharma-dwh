@@ -1,6 +1,6 @@
 # Clarity Pharma Data Warehouse
 
-Pharmaceutical supply chain data warehouse built with Apache Airflow, PostgreSQL, DuckDB, and Grafana. This project implements a Kimball star schema for the Sales and Demand Intelligence (SDI) data mart.
+Pharmaceutical supply chain data warehouse built with Apache Airflow, PostgreSQL, DuckDB, and Grafana. This project implements a star schema for the Sales and Demand Intelligence (SDI) data mart.
 
 ## Group Members
 
