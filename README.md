@@ -7,7 +7,7 @@ Pharmaceutical supply chain data warehouse built with Apache Airflow, PostgreSQL
 | Name | Student ID |
 |------|-----------|
 |  Khadija Sajid    | 36229      |
-|  Syeda Rumaisa     | 36227     |
+|  Syeda Rumaisa Javed    | 36227     |
 
 ## Project Structure
 
