@@ -22,7 +22,7 @@ clarity-pharma-dwh/          # All pipeline code
     generate_data.py          # Data generation logic (oversampling)
     pipeline_controller_api.py # FastAPI automation controller
   data/
-    baseline/                 # Baseline data (2023 to 2025)
+    baseline/                 # Baseline data (2024 to 2025)
   grafana/
     provisioning/             # Auto-loaded datasources and dashboard configs
     dashboards/               # Grafana dashboard JSON files
@@ -31,11 +31,11 @@ clarity-pharma-dwh/          # All pipeline code
   Dockerfile                  # Custom Airflow image with dependencies
   requirements.txt            # Python dependencies
 report/
-  Phase.1.Report.docx         # Phase 1 project report (max 5 pages)
+  Phase.1.Report.pdf         # Phase 1 project report without BI
 excel/
   SDI.Excel.xlsx              # SDI data mart Excel file
 video/
-  demo_video.mp4              # 5 min demo video
+  demo_video.mp4              # 2 min demo video
 ```
 
 ## Tech Stack
