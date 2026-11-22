@@ -32,10 +32,11 @@ clarity-pharma-dwh/          # All pipeline code
   requirements.txt            # Python dependencies
 report/
   Phase.1.Report.pdf         # Phase 1 project report without BI
+  Oversample.Report.pdf      # To explain the oversample process
 excel/
   SDI.Excel.xlsx              # SDI data mart Excel file
 video/
-  demo_video.mp4              # 2 min demo video
+  DriveVideoLink.txt         # Link to video
 ```
 
 ## Tech Stack
@@ -106,12 +107,6 @@ dag_00 (generate) -> dag_01 (ingest) -> dag_02 (transform) -> dag_03 (query)
 
 ```bash
 docker compose down
-```
-
-To also remove stored data (volumes):
-
-```bash
-docker compose down -v
 ```
 
 ## Pipeline Architecture
