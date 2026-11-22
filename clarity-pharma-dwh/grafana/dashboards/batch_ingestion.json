@@ -1,0 +1,76 @@
+{
+  "dashboard": {
+    "title": "Batch Ingestion Dashboard",
+    "tags": ["clarity-pharma", "ingestion"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Rows Loaded per Table",
+        "type": "barchart",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT \"TableName\", \"RowsLoaded\" FROM ingestion_metrics ORDER BY \"MeasuredAt\"",
+          "format": "table",
+          "refId": "A"
+        }],
+        "fieldConfig": {
+          "defaults": {"color": {"mode": "palette-classic"}},
+          "overrides": []
+        }
+      },
+      {
+        "id": 2,
+        "title": "Load Time per Table (seconds)",
+        "type": "barchart",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT \"TableName\", \"LoadTimeSec\" FROM ingestion_metrics ORDER BY \"MeasuredAt\"",
+          "format": "table",
+          "refId": "A"
+        }]
+      },
+      {
+        "id": 3,
+        "title": "Throughput (Rows/Sec)",
+        "type": "barchart",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT \"TableName\", \"BatchFolder\", \"ThroughputRowsPerSec\" FROM ingestion_metrics ORDER BY \"MeasuredAt\"",
+          "format": "table",
+          "refId": "A"
+        }]
+      },
+      {
+        "id": 4,
+        "title": "File Size (MB)",
+        "type": "barchart",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT \"TableName\", \"BatchFolder\", \"FileSizeMB\" FROM ingestion_metrics ORDER BY \"MeasuredAt\"",
+          "format": "table",
+          "refId": "A"
+        }]
+      },
+      {
+        "id": 5,
+        "title": "Ingestion Metrics Table",
+        "type": "table",
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 16},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT \"TableName\", \"BatchFolder\", \"RowsLoaded\", \"LoadTimeSec\", \"FileSizeMB\", \"ThroughputRowsPerSec\", \"Status\", \"MeasuredAt\" FROM ingestion_metrics ORDER BY \"MeasuredAt\"",
+          "format": "table",
+          "refId": "A"
+        }]
+      }
+    ],
+    "schemaVersion": 38,
+    "version": 1
+  },
+  "overwrite": true
+}

@@ -1,0 +1,96 @@
+{
+  "dashboard": {
+    "title": "Query Performance Dashboard",
+    "tags": ["clarity-pharma", "query"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Query Execution Time (ms)",
+        "type": "barchart",
+        "gridPos": {"h": 8, "w": 16, "x": 0, "y": 0},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT \"QueryName\", \"ExecutionTimeMs\" FROM query_performance_log ORDER BY \"ExecutionTimeMs\" DESC",
+          "format": "table",
+          "refId": "A"
+        }],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 500},
+                {"color": "red", "value": 2000}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "Avg Query Time (ms)",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 4, "x": 16, "y": 0},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT ROUND(AVG(\"ExecutionTimeMs\")::numeric, 2) as \"Avg ms\" FROM query_performance_log",
+          "format": "table",
+          "refId": "A"
+        }]
+      },
+      {
+        "id": 3,
+        "title": "Max Query Time (ms)",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 4, "x": 20, "y": 0},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT MAX(\"ExecutionTimeMs\") as \"Max ms\" FROM query_performance_log",
+          "format": "table",
+          "refId": "A"
+        }]
+      },
+      {
+        "id": 4,
+        "title": "Total Queries Run",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 4, "x": 16, "y": 4},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT COUNT(*) as \"Total Queries\" FROM query_performance_log",
+          "format": "table",
+          "refId": "A"
+        }]
+      },
+      {
+        "id": 5,
+        "title": "Rows Returned per Query",
+        "type": "barchart",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT \"QueryName\", \"RowsReturned\" FROM query_performance_log WHERE \"RowsReturned\" > 0 ORDER BY \"RowsReturned\" DESC",
+          "format": "table",
+          "refId": "A"
+        }]
+      },
+      {
+        "id": 6,
+        "title": "Query Performance Log",
+        "type": "table",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT \"QueryName\", \"ExecutionTimeMs\", \"Status\", \"RowsReturned\", \"ExecutedAt\" FROM query_performance_log ORDER BY \"ExecutedAt\"",
+          "format": "table",
+          "refId": "A"
+        }]
+      }
+    ],
+    "schemaVersion": 38,
+    "version": 1
+  },
+  "overwrite": true
+}

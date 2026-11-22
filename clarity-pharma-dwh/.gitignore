@@ -1,0 +1,7 @@
+logs/
+__pycache__/
+*.pyc
+.env
+*.egg-info/
+duckdb/*.duckdb
+duckdb/*.wal

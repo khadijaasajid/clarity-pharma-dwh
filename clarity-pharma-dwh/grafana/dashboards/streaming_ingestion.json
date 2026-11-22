@@ -1,0 +1,96 @@
+{
+  "dashboard": {
+    "title": "Streaming Ingestion Dashboard",
+    "tags": ["clarity-pharma", "streaming"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Records: Total vs Valid vs Dropped",
+        "type": "barchart",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT \"BatchFolder\", \"TotalRecords\", \"ValidRecords\", \"DroppedRecords\" FROM streaming_metrics ORDER BY \"MeasuredAt\"",
+          "format": "table",
+          "refId": "A"
+        }]
+      },
+      {
+        "id": 2,
+        "title": "Data Quality: Violations by Type",
+        "type": "barchart",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT \"BatchFolder\", \"NullKeyViolations\", \"SchemaMismatchErrors\", \"LateArrivals\", \"TempBreaches\", \"HumidityBreaches\" FROM streaming_metrics ORDER BY \"MeasuredAt\"",
+          "format": "table",
+          "refId": "A"
+        }]
+      },
+      {
+        "id": 3,
+        "title": "Throughput (Events/Sec)",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 8},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT AVG(\"ThroughputEPS\") as \"Avg Throughput EPS\" FROM streaming_metrics",
+          "format": "table",
+          "refId": "A"
+        }]
+      },
+      {
+        "id": 4,
+        "title": "Avg Latency (Sec)",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 6, "y": 8},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT AVG(\"AvgLatencySec\") as \"Avg Latency\" FROM streaming_metrics",
+          "format": "table",
+          "refId": "A"
+        }]
+      },
+      {
+        "id": 5,
+        "title": "Total Dropped Records",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 12, "y": 8},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT SUM(\"DroppedRecords\") as \"Total Dropped\" FROM streaming_metrics",
+          "format": "table",
+          "refId": "A"
+        }]
+      },
+      {
+        "id": 6,
+        "title": "Data Quality Rate (%)",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 18, "y": 8},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT ROUND(AVG(\"ValidRecords\"::numeric / NULLIF(\"TotalRecords\", 0) * 100), 2) as \"Quality %\" FROM streaming_metrics",
+          "format": "table",
+          "refId": "A"
+        }]
+      },
+      {
+        "id": 7,
+        "title": "Streaming Metrics Table",
+        "type": "table",
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 12},
+        "datasource": {"type": "postgres", "uid": "${DS_POSTGRESQL_STAGING}"},
+        "targets": [{
+          "rawSql": "SELECT \"BatchFolder\", \"TotalRecords\", \"ValidRecords\", \"DroppedRecords\", \"NullKeyViolations\", \"SchemaMismatchErrors\", \"ThroughputEPS\", \"AvgLatencySec\", \"LateArrivals\", \"TempBreaches\", \"HumidityBreaches\", \"Status\", \"MeasuredAt\" FROM streaming_metrics ORDER BY \"MeasuredAt\"",
+          "format": "table",
+          "refId": "A"
+        }]
+      }
+    ],
+    "schemaVersion": 38,
+    "version": 1
+  },
+  "overwrite": true
+}

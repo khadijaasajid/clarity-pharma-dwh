@@ -1,0 +1,16 @@
+apiVersion: 1
+
+datasources:
+  - name: PostgreSQL Staging
+    type: postgres
+    access: proxy
+    url: postgres-staging:5432
+    database: staging
+    user: staging
+    secureJsonData:
+      password: staging
+    jsonData:
+      sslmode: disable
+      postgresVersion: 1500
+    isDefault: true
+    editable: true
